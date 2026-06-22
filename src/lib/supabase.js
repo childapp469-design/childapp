@@ -1,27 +1,15 @@
 import { createClient } from '@supabase/supabase-js';
+import { SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SQL_EDITOR_URL } from '../config/appConfig';
 
-const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
-const supabaseAnonKey = process.env.REACT_APP_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.warn(
-    'Supabase konfiqurasiyası tapılmadı. .env faylında REACT_APP_SUPABASE_URL və REACT_APP_SUPABASE_ANON_KEY təyin edin.'
-  );
-}
-
-export const supabase = createClient(
-  supabaseUrl || 'https://placeholder.supabase.co',
-  supabaseAnonKey || 'placeholder-key',
-  {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true,
-    },
-  }
-);
+export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+  },
+});
 
 export const isSupabaseConfigured = () =>
-  Boolean(supabaseUrl && supabaseAnonKey && !supabaseUrl.includes('placeholder'));
+  Boolean(SUPABASE_URL && SUPABASE_ANON_KEY && !SUPABASE_URL.includes('placeholder'));
 
 export const TABLES = {
   CHILDREN: 'children',
@@ -34,5 +22,4 @@ export const TABLES = {
 
 export const STORAGE_BUCKET = 'child-photos';
 
-export const SUPABASE_SQL_EDITOR_URL =
-  'https://supabase.com/dashboard/project/fiwwthtlzbraqwevdidx/sql/new';
+export { SUPABASE_SQL_EDITOR_URL };
