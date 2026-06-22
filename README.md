@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+# Uşaqların Gündəlik Fəaliyyətləri - Veb Tətbiq
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Uşaqların gündəlik tapşırıqlarının izlənilməsi, qiymətləndirilməsi və statistik hesabatlar üçün React + Supabase veb tətbiqi.
 
-## Available Scripts
+## Texnologiyalar
 
-In the project directory, you can run:
+- **Frontend:** React.js (Create React App)
+- **Backend:** Supabase (PostgreSQL, Auth, Storage)
+- **Oflayn:** IndexedDB + avtomatik sinxronizasiya
+- **Excel:** xlsx kitabxanası (ixrac/import)
 
-### `npm start`
+## Quraşdırma
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```bash
+npm install
+cp .env.example .env
+# .env faylında Supabase məlumatlarını doldurun
+npm start
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Supabase konfiqurasiyası
 
-### `npm test`
+1. [Supabase](https://supabase.com) layihəsi yaradın
+2. SQL Editor-də `supabase/migrations/001_initial_schema.sql` faylını icra edin
+3. Authentication → Users bölməsində admin istifadəçi yaradın
+4. `.env` faylına URL və anon key əlavə edin:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+REACT_APP_SUPABASE_URL=https://xxx.supabase.co
+REACT_APP_SUPABASE_ANON_KEY=your-anon-key
+```
 
-### `npm run build`
+## Demo rejim
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Supabase konfiqurasiya olunmayıbsa, tətbiq lokal demo rejimində işləyir (IndexedDB). PIN kod ilə giriş: **1234**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Seçilmiş texniki qərarlar
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+| Sual | Qərar |
+|------|-------|
+| Oflayn saxlama | IndexedDB |
+| Excel | İxrac/Import (əsas DB: Supabase) |
+| Qiymətləndirmə | Bal + Ulduz |
+| Silinən uşaqlar | Arxivə köçürülür |
+| Audit jurnalı | Bəli |
+| Şəkillər | Supabase Storage |
+| Sinxronizasiya | Avtomatik + əl ilə |
+| Qrafiklər | Bəli (Recharts) |
 
-### `npm run eject`
+## Struktur
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
+src/
+├── components/     # UI komponentləri
+├── contexts/       # Auth və Data context
+├── lib/            # API, IndexedDB, Excel, utils
+└── App.js          # Əsas tətbiq
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Menyu
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. **Əsas panel** — Uşaqlar sütunlar şəklində, tapşırıq icrası
+2. **Uşaq əlavə et** — Yeni uşaq forması
+3. **Tapşırıqlar** — Tapşırıq idarəetməsi
+4. **Nəticələr** — Bal düzəlişləri, dövr üzrə nəticələr
+5. **Hesabatlar** — Statistika və qrafiklər
+6. **Sinxronizasiya** — Supabase sync, Excel ixrac/import
+7. **Parametrlər** — PIN kod, audit jurnalı
